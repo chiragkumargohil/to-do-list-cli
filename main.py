@@ -1,68 +1,85 @@
+import csv
+import datetime
+
+
+current_time = str(datetime.datetime.today()).split()
+save_time = str('-'.join(list(reversed(current_time[0].split('-')))) + ' @ ' +':'.join(current_time[1].split(':')[:2]))
+fieldnames = ['Timestamp', 'Task']
+fieldnames2 = ['Timestamp', 'Task', 'DeletedOn']
+data_file = 'data.csv'
+history_file = 'history.csv'
+
 class ToDoList:
 
-    def __init__(self, li):
-        self.items = li
+    def __init__(self):
+        
+        with open(data_file) as f1:
+            items = csv.DictReader(f1)
+            self.items = list(items)
+        
+        with open(history_file) as f2:
+            deleted_items = csv.DictReader(f2)
+            self.deleted_items = list(deleted_items)
+            
+        print('''\n=== Welcome to To-Do List App ===''')
 
-    def displayItems(self):
-        print("\n|| Your To-Do List ||\n")
-        for i, item in enumerate(self.items):
-            print(f"{i+1}. {item}")
+    def display_items(self):
+        print("\n--- Your To-Do List ---\n")
+        sr = 1
+        for item in self.items:
+            print(f"{sr}. {item['Timestamp']} | {item['Task']}")
+            sr += 1
     
-    def addItem(self):
-        item = input("\nAdd : ")
-        self.items.append(item)
-        print(f"Item has been added.")
+    def add_item(self):
+        item = input("\nAdd Task: ")
+        adding = {'Timestamp': save_time, 'Task': item}
+        self.items += [adding]
+        print("The item has been added.")
 
-    def removeItem(self):
-        ToDoList.displayItems(self)
-        print("\nWhat do you want remove from above items?")
+    def remove_item(self):
+        ToDoList.display_items(self)
+        print("\nWhat do you want to remove from the items above?")
+        
         try:
-            i = int(input("Remove (Just type assigned number) : "))
-            self.items.remove(self.items[i - 1])
-            print(f"Item has been removed successfully.")
+            deletion = int(input("Remove Item by just typing number assigned: "))
+            if deletion <= 0 or deletion > len(self.items):
+                raise ValueError
+
+            deleted_item = self.items.pop(deletion-1)
+            print('The item has been deleted.')
+            
+            action = {'DeletedOn': save_time}
+            deleted_item.update(action)
+            self.deleted_items += [deleted_item]
         except:
-            print("Please enter a number assigned to item in above list.")
+            print("Please enter a valid number assigned to item in the above list.")
+
+    def history(self):
+        print("\n--- Your Deleted To-Do List ---\n")
+        sr = 1
+        for del_item in self.deleted_items:
+            print(f"{sr}. Deleted On: {del_item['DeletedOn']} -> {del_item['Timestamp']} | {del_item['Task']}")
+            sr += 1
+    
+    def save_file(self):
+        with open(data_file, 'w', encoding='UTF8', newline='') as f1:
+            writer = csv.DictWriter(f1, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(self.items)
+        
+        with open(history_file, 'w', encoding='UTF8', newline='') as f2:
+            writer = csv.DictWriter(f2, fieldnames=fieldnames2)
+            writer.writeheader()
+            writer.writerows(self.deleted_items)
+
 
     @staticmethod
-    def menu_list():
+    def help_menu():
         menu_message ='''
-Press '1' to Show Items
+Press '1' to See Items
 Press '2' to Add Item
 Press '3' to Remove Item
-Press '4' to Quit the App
+Press '4' to See Deleted Items
+Press '5' or 'quit' to Quit the App (You must quit by pressing '5' to save your data.)
 '''
         print(menu_message)
-
-if __name__ == "__main__":
-    user_input = ""
-    to_do_list = []
-
-    print('''"Welcome to To-Do List App"''')
-
-    with open("to-do-list.txt") as f:
-        lines = f.readlines()
-        for line in lines:
-            line.strip("")
-            to_do_list.append(line.strip("\n"))
-
-    listing = ToDoList(to_do_list)
-
-    while user_input != "4":
-
-        ToDoList.menu_list()
-        user_input = input("What do you want to Do? ")
-        
-        if user_input == "1":
-            listing.displayItems()
-        elif user_input == "2":
-            listing.addItem()
-        elif user_input == "3":
-            listing.removeItem()
-        elif user_input == "4":
-            print("\nThank You! Your To-Do Lists have been saved.")
-        else:
-            print("\nEnter valid response.")
-        
-        with open("to-do-list.txt", "w") as f:
-            for item in to_do_list:
-                print(item, file=f)
