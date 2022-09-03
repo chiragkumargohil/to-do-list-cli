@@ -71,6 +71,8 @@ class ToDoList:
             writer = csv.DictWriter(f2, fieldnames=fieldnames2)
             writer.writeheader()
             writer.writerows(self.deleted_items)
+        
+        print("\nThank You! Your To-Do List has been saved.")
 
 
     @staticmethod
