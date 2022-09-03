@@ -1,5 +1,7 @@
 ## Sample Output
 
+One can save one’s To-Do Lists, see tasks with a timestamp, and delete tasks.
+
 You can view the result as shown below when you execute the [main.py](main.py) file on your device.
 
 ```
@@ -53,7 +55,6 @@ Press '3' to Remove Item
 Press '4' to See Deleted Items
 Press '5' or 'quit' to Quit the App (You must quit by pressing '5' to save your data.)
 
-
 Type 'help' to see the menu OR 'quit' to save your list and close the app,
 -> What do you want to Do?: 4
 
@@ -70,4 +71,4 @@ Type 'help' to see the menu OR 'quit' to save your list and close the app,
 Thank You! Your To-Do List has been saved.
 ```
 
-Go to [Repository](https://github.com/chiragkumargohil/to-do-list-app.git)
+Go to [Repository](https://github.com/chiragkumargohil/to-do-list-app.git).
