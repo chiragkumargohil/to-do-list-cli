@@ -20,7 +20,6 @@ if __name__ == "__main__":
             myApp.history()
         elif user_input == "5" or user_input.lower() == 'quit':
             myApp.save_file()
-            print("\nThank You! Your To-Do List has been saved.")
             break
         else:
             print("\nEnter valid response.")
