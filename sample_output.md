@@ -65,4 +65,4 @@ Type 'help' to see the menu OR 'quit' to save your list and close the app,
 Thank You! Your To-Do List has been saved.
 ```
 
-Go to [Repository](https://github.com/chiragkumargohil/to-do-list-py.git)
+Go to [Repository](https://github.com/chiragkumargohil/to-do-list-app.git)
