@@ -21,6 +21,11 @@ Type 'help' to see the menu OR 'quit' to save your list and close the app,
 2. 31-08-2022 @ 13:16 | trial2
 
 Type 'help' to see the menu OR 'quit' to save your list and close the app,
+-> What do you want to Do?: add
+
+Enter valid response.
+
+Type 'help' to see the menu OR 'quit' to save your list and close the app,
 -> What do you want to Do?: 2
 
 Add Task: create sample output
